@@ -1,5 +1,4 @@
 import { CONFIG } from "./config.js";
-import { clamp } from "./util.js";
 
 // Responsible for all canvas drawing. Pure functions that read from state.
 
@@ -159,6 +158,93 @@ export function createRenderer(canvas) {
     ctx.restore();
   }
 
+  function drawThreat(th) {
+    ctx.save();
+    ctx.translate(th.x, th.y);
+    switch (th.type) {
+      case "mailman":
+        ctx.fillStyle = "#3558a8";
+        ctx.beginPath();
+        ctx.roundRect(-14, -22, 28, 40, 8);
+        ctx.fill();
+        ctx.fillStyle = "#f4d2b2";
+        ctx.beginPath();
+        ctx.arc(0, -24, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(-12, -4, 18, 10);
+        break;
+      case "leaf":
+        ctx.fillStyle = "#ffe66d";
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 10, 5, 0.6, 0, Math.PI * 2);
+        ctx.fill();
+        break;
+      case "squirrel":
+        ctx.fillStyle = "#c07a3a";
+        ctx.beginPath();
+        ctx.ellipse(0, 2, 14, 10, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(-8, -6, 7, 10, -0.4, 0, Math.PI * 2);
+        ctx.fill();
+        break;
+      case "bike":
+        ctx.fillStyle = "#ffcc57";
+        ctx.beginPath();
+        ctx.arc(-10, 8, 7, 0, Math.PI * 2);
+        ctx.arc(10, 8, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "#1e1b4b";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(-10, 4);
+        ctx.lineTo(0, -6);
+        ctx.lineTo(10, 4);
+        ctx.stroke();
+        break;
+      case "box":
+        ctx.fillStyle = "#d29b63";
+        ctx.beginPath();
+        ctx.roundRect(-14, -14, 28, 28, 4);
+        ctx.fill();
+        ctx.strokeStyle = "#b17f47";
+        ctx.beginPath();
+        ctx.moveTo(-14, 0);
+        ctx.lineTo(14, 0);
+        ctx.moveTo(0, -14);
+        ctx.lineTo(0, 14);
+        ctx.stroke();
+        break;
+      default:
+        break;
+    }
+    ctx.restore();
+  }
+
+  function drawProp(pr) {
+    ctx.save();
+    ctx.translate(pr.x, pr.y);
+    if (pr.kind === "flower") {
+      ctx.fillStyle = "#6dd3ff";
+      ctx.beginPath();
+      ctx.arc(0, 0, 10, 0, Math.PI * 2);
+      ctx.fill();
+    } else if (pr.kind === "slipper") {
+      ctx.fillStyle = "#f3a7d5";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 16, 8, 0.3, 0, Math.PI * 2);
+      ctx.fill();
+    } else if (pr.kind === "toy") {
+      ctx.fillStyle = "#ffcc57";
+      ctx.beginPath();
+      ctx.arc(-7, 0, 5, 0, Math.PI * 2);
+      ctx.arc(7, 0, 5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
   function draw(state, dt) {
     const { world } = CONFIG;
     ctx.save();
@@ -169,6 +255,8 @@ export function createRenderer(canvas) {
     ctx.translate(camera.offX, camera.offY);
 
     drawYard();
+    (state.props || []).forEach(drawProp);
+    (state.threats || []).forEach(drawThreat);
     if (state.player) {
       drawPuppy(state.player);
     }
