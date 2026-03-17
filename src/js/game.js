@@ -259,17 +259,18 @@ export function createGame() {
     // Resolve dead threats & delivery
     const porchY = world.h * 0.34;
     state.threats = state.threats.filter((th) => {
+      // If \"killed\" (hp <= 0), never counts as delivered.
       if (th.hp <= 0) {
         applyScore(th.score || 60, "Hit!");
         playSound("hit");
         return false;
       }
-      // delivered if reaches porch/mailbox zone
-      if (th.y > porchY && th.type !== "leaf") {
+      // Delivered only if mail-related threats actually reach porch/mailbox zone.
+      if (th.y > porchY && (th.type === "mailman" || th.type === "box")) {
         state.delivered += 1;
         return false;
       }
-      // leaves count when they drift fully across screen
+      // Leaves count when they drift fully across screen untouched.
       if (th.type === "leaf" && (th.x < -80 || th.x > world.w + 80)) {
         state.delivered += 1;
         return false;
