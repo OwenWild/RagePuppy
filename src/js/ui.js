@@ -1,6 +1,6 @@
 import { CONFIG } from "./config.js";
 import { loadSave, saveData } from "./storage.js";
-import { isMuted, setMuted } from "./audio.js";
+import { isMuted, setMuted, initBgm } from "./audio.js";
 
 // DOM HUD + overlays; game logic lives in game.js.
 
@@ -38,6 +38,8 @@ export function createUI(game) {
 
   function showMenu() {
     if (!overlayEl) return;
+    // Ensure BGM is ready once user reaches the title screen after first gesture.
+    initBgm();
     overlayEl.innerHTML = `
       <section class="panel">
         <header class="panelHeader">
