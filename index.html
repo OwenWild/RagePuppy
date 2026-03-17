@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#ff4d6d" />
+    <title>RagePuppy — Tiny Dog. Huge Feelings.</title>
+    <meta
+      name="description"
+      content="RagePuppy: a cute, funny arcade defense game. Tiny dog. Huge feelings."
+    />
+    <link rel="preload" href="src/css/styles.css" as="style" />
+    <link rel="stylesheet" href="src/css/styles.css" />
+  </head>
+  <body>
+    <div id="app" class="app">
+      <header class="topbar" aria-label="RagePuppy header">
+        <div class="brand">
+          <div class="logoMark" aria-hidden="true">RP</div>
+          <div class="brandText">
+            <div class="title">RagePuppy</div>
+            <div class="subtitle">Tiny Dog. Huge Feelings.</div>
+          </div>
+        </div>
+
+        <div class="topbarRight">
+          <button id="btnSound" class="pill" type="button" aria-pressed="true" title="Toggle sound">
+            Sound: On
+          </button>
+          <button id="btnPause" class="pill" type="button" title="Pause (Esc)">Pause</button>
+        </div>
+      </header>
+
+      <main class="main">
+        <div class="stageWrap">
+          <canvas id="game" class="gameCanvas" width="960" height="540" aria-label="RagePuppy game canvas"></canvas>
+
+          <div id="hud" class="hud" aria-hidden="true">
+            <div class="hudLeft">
+              <div class="hudStat">
+                <div class="hudLabel">Score</div>
+                <div id="hudScore" class="hudValue">0</div>
+              </div>
+              <div class="hudStat">
+                <div class="hudLabel">Combo</div>
+                <div id="hudCombo" class="hudValue">x1</div>
+              </div>
+            </div>
+
+            <div class="hudRight">
+              <div class="meter">
+                <div class="meterTop">
+                  <div class="meterLabel">Mail Delivered</div>
+                  <div id="hudDelivered" class="meterValue">0 / 6</div>
+                </div>
+                <div class="meterBar">
+                  <div id="hudDeliveredFill" class="meterFill"></div>
+                </div>
+              </div>
+              <div class="cooldowns">
+                <div class="cd">
+                  <div class="cdName">Bark</div>
+                  <div class="cdBar"><div id="cdBark" class="cdFill"></div></div>
+                </div>
+                <div class="cd">
+                  <div class="cdName">Dash</div>
+                  <div class="cdBar"><div id="cdDash" class="cdFill"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="mobileControls" class="mobileControls" aria-hidden="true">
+            <div class="joyWrap">
+              <div id="joyBase" class="joyBase">
+                <div id="joyStick" class="joyStick"></div>
+              </div>
+              <div class="joyHint">Move</div>
+            </div>
+
+            <div class="actionWrap">
+              <button id="btnBark" class="actionBtn actionBark" type="button">
+                <span class="actionIcon">BORK</span>
+                <span class="actionSmall">Tap</span>
+              </button>
+              <button id="btnDash" class="actionBtn actionDash" type="button">
+                <span class="actionIcon">ZOOM</span>
+                <span class="actionSmall">Tap</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="overlay" class="overlay" aria-live="polite"></div>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="hintRow">
+          <span class="kbd">WASD</span>/<span class="kbd">Arrows</span> Move
+          <span class="dot">•</span>
+          <span class="kbd">Space</span> Bark
+          <span class="dot">•</span>
+          <span class="kbd">Shift</span> Dash
+          <span class="dot">•</span>
+          <span class="kbd">Esc</span> Pause
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="src/js/main.js"></script>
+  </body>
+</html>
