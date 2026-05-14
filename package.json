@@ -1,0 +1,17 @@
+{
+  "name": "ragepuppy-multiplayer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "RagePuppy.com — multiplayer sandbox. Tiny dogs. Huge feelings. Shared yard.",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

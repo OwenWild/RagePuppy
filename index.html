@@ -4,11 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#ff4d6d" />
-    <title>RagePuppy — Tiny Dog. Huge Feelings.</title>
-    <meta
-      name="description"
-      content="RagePuppy: a cute, funny arcade defense game. Tiny dog. Huge feelings."
-    />
+    <title>RagePuppy Sandbox — Tiny Dogs. Huge Feelings.</title>
+    <meta name="description" content="RagePuppy Sandbox: multiplayer browser playground. Build, bark, and bonk together." />
     <link rel="preload" href="src/css/styles.css" as="style" />
     <link rel="stylesheet" href="src/css/styles.css" />
   </head>
@@ -16,24 +13,22 @@
     <div id="app" class="app">
       <header class="topbar" aria-label="RagePuppy header">
         <div class="brand">
-          <div class="logoMark" aria-hidden="true">RP</div>
+          <div class="logoMark" aria-hidden="true">🐶</div>
           <div class="brandText">
-            <div class="title">RagePuppy</div>
-            <div class="subtitle">Tiny Dog. Huge Feelings.</div>
+            <div class="title">RagePuppy Sandbox</div>
+            <div class="subtitle">Tiny Dogs. Huge Feelings. Shared yard.</div>
           </div>
         </div>
-
         <div class="topbarRight">
-          <button id="btnSound" class="pill" type="button" aria-pressed="true" title="Toggle sound">
-            Sound: On
-          </button>
-          <button id="btnPause" class="pill" type="button" title="Pause (Esc)">Pause</button>
+          <span id="hudStatus" class="statusPill offline" title="Connection status">—</span>
+          <button id="btnSound" class="pill" type="button" aria-pressed="true" title="Toggle sound">🔊 Sound</button>
+          <button id="btnPause" class="pill" type="button" title="Pause (Esc)">⏸ Pause</button>
         </div>
       </header>
 
       <main class="main">
         <div class="stageWrap">
-          <canvas id="game" class="gameCanvas" width="960" height="540" aria-label="RagePuppy game canvas"></canvas>
+          <canvas id="game" class="gameCanvas" aria-label="RagePuppy game canvas"></canvas>
 
           <div id="hud" class="hud" aria-hidden="true">
             <div class="hudLeft">
@@ -42,21 +37,20 @@
                 <div id="hudScore" class="hudValue">0</div>
               </div>
               <div class="hudStat">
-                <div class="hudLabel">Combo</div>
-                <div id="hudCombo" class="hudValue">x1</div>
+                <div class="hudLabel">Pups</div>
+                <div id="hudPlayers" class="hudValue">1</div>
+              </div>
+            </div>
+
+            <div class="hudCenter">
+              <div class="toolBox">
+                <div class="toolLabel">Tool</div>
+                <div class="toolName" id="toolName">Move</div>
+                <div class="toolHint" id="toolHint">Walk around. Bark + Dash always available.</div>
               </div>
             </div>
 
             <div class="hudRight">
-              <div class="meter">
-                <div class="meterTop">
-                  <div class="meterLabel">Mail Delivered</div>
-                  <div id="hudDelivered" class="meterValue">0 / 6</div>
-                </div>
-                <div class="meterBar">
-                  <div id="hudDeliveredFill" class="meterFill"></div>
-                </div>
-              </div>
               <div class="cooldowns">
                 <div class="cd">
                   <div class="cdName">Bark</div>
@@ -67,7 +61,15 @@
                   <div class="cdBar"><div id="cdDash" class="cdFill"></div></div>
                 </div>
               </div>
+              <div class="playerList" id="playerList" aria-label="Player list"></div>
             </div>
+          </div>
+
+          <div id="hotbar" class="hotbar" aria-label="Tool hotbar"></div>
+
+          <div id="chatBox" class="chatBox" aria-label="Chat">
+            <div id="chatLog" class="chatLog"></div>
+            <input id="chatInput" class="chatInput" type="text" maxlength="140" placeholder="Press T or Enter to chat… Esc to close." autocomplete="off" />
           </div>
 
           <div id="mobileControls" class="mobileControls" aria-hidden="true">
@@ -77,8 +79,11 @@
               </div>
               <div class="joyHint">Move</div>
             </div>
-
             <div class="actionWrap">
+              <button id="btnUse"  class="actionBtn actionUse"  type="button">
+                <span class="actionIcon">USE</span>
+                <span class="actionSmall">Tool</span>
+              </button>
               <button id="btnBark" class="actionBtn actionBark" type="button">
                 <span class="actionIcon">BORK</span>
                 <span class="actionSmall">Tap</span>
@@ -96,11 +101,17 @@
 
       <footer class="footer">
         <div class="hintRow">
-          <span class="kbd">WASD</span>/<span class="kbd">Arrows</span> Move
+          <span class="kbd">WASD</span> Move
           <span class="dot">•</span>
           <span class="kbd">Space</span> Bark
           <span class="dot">•</span>
           <span class="kbd">Shift</span> Dash
+          <span class="dot">•</span>
+          <span class="kbd">1–0</span> Tools
+          <span class="dot">•</span>
+          <span class="kbd">Click</span> Use Tool
+          <span class="dot">•</span>
+          <span class="kbd">T</span> Chat
           <span class="dot">•</span>
           <span class="kbd">Esc</span> Pause
         </div>
